@@ -5,7 +5,6 @@
    [korma.db :only (transaction)]
    [clojure.string :only (split lower-case)])
   (:require
-   [warden.cache :as cache]
    [warden.models.currency :as currency]
    [clj-http.client :as client]))
 

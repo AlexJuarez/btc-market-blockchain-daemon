@@ -1,7 +1,6 @@
 (ns warden.models.currency
   (:refer-clojure :exclude [get find])
   (:require
-        [warden.cache :as cache]
         [korma.core :refer [where values select insert]]
         [korma.db :refer [defdb]])
   (:use [warden.db :only [currency]]))
@@ -12,7 +11,7 @@
             (where {:id id}))))
 
 (defn all []
-  (cache/cache! "curriences" (select currency)))
+  (select currency))
 
 (defn add! [currencies]
   (insert currency (values currencies)))
