@@ -6,6 +6,7 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies
+  :aot {:all}
   [[org.clojure/clojure "1.6.0"]
    [lib-noir "0.8.2"];;for io and session utils
    [overtone/at-at "1.2.0"]

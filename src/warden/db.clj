@@ -17,12 +17,13 @@
 
 (defdb web web-db)
 
-(declare exchange currency)
+(declare exchange currency withdrawal)
 
 (defentity exchange
-  (database web)
   (table :exchangerate))
 
 (defentity currency
-  (database web)
   (table :currency))
+
+(defentity withdrawal
+  (table :withdrawal))
