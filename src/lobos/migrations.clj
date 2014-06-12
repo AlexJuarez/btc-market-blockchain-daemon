@@ -6,11 +6,11 @@
 (defmigration add-transactions-table
   (up [] (create
           (tbl :transaction
-               (varchar :id 64 :primary-key))))
+               (varchar :id 64))))
   (down [] (drop (table :transaction))))
 
 (defmigration add-blocks-table
   (up [] (create
           (tbl :block
-               (varchar :id 64 :primary-key))))
+               (varchar :id 64))))
   (down [] (drop (table :block))))

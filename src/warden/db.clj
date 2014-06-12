@@ -16,14 +16,26 @@
      :password "admin"}))
 
 (defdb web web-db)
+(defdb secure wallets-spec)
 
 (declare exchange currency withdrawal)
 
 (defentity exchange
+  (database web)
   (table :exchangerate))
 
 (defentity currency
+  (database web)
   (table :currency))
 
 (defentity withdrawal
+  (database web)
   (table :withdrawal))
+
+(defentity tranactions
+  (database secure)
+  (table :transaction))
+
+(defentity blocks
+  (database secure)
+  (table :block))
