@@ -13,9 +13,8 @@
              :rpchost "http://127.0.0.1"
              :rpcport "8332"})
 
-(defn handle-details [{account "account" category "category" amount "amount"} confirmations txid]
-  (if (and (= category "receive")
-             (> confirmations 6))
+(defn handle-details [{account "account" category "category" amount "amount"} txid]
+  (if (= category "receive")
       (let [user-id (util/parse-int account)
             amount (util/parse-int amount)]
         (transaction
@@ -26,7 +25,8 @@
   (let [info (btc/gettransaction :txid tx :config config)
         details (info "details")
         confirmations (info "confirmations")]
-    (doall (map #(handle-details % confirmations tx) details))))
+    (if (> confirmations 6)
+      (doall (map #(handle-details % confirmations tx) details)))))
 
 (defn updatewallets []
   (let [txs (select transactions (limit 1000) (order :created_on :desc))]
