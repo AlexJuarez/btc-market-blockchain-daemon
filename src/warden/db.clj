@@ -16,9 +16,8 @@
      :password "admin"}))
 
 (defdb web web-db)
-(defdb secure wallets-spec)
 
-(declare exchange currency withdrawal)
+(declare users audits exchange currency withdrawal transactions blocks)
 
 (defentity users
   (database web)
@@ -40,7 +39,9 @@
   (database web)
   (table :audit))
 
-(defentity tranactions
+(defdb secure wallets-spec)
+
+(defentity transactions
   (database secure)
   (table :transaction))
 
