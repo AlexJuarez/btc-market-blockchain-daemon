@@ -20,6 +20,10 @@
 
 (declare exchange currency withdrawal)
 
+(defentity users
+  (database web)
+  (table :user))
+
 (defentity exchange
   (database web)
   (table :exchangerate))
@@ -31,6 +35,10 @@
 (defentity withdrawal
   (database web)
   (table :withdrawal))
+
+(defentity audits
+  (database web)
+  (table :audit))
 
 (defentity tranactions
   (database secure)

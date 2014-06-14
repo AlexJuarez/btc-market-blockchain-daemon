@@ -5,7 +5,8 @@
   :url "http://example.com/FIXME"
   :profiles {:user
              {:env
-              {:wallet-db-user "warden"
+              {:confrimations 5
+               :wallet-db-user "warden"
                :wallet-db-pass "admin"}}}
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
