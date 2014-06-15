@@ -26,7 +26,7 @@
         details (info "details")
         confirmations (info "confirmations")]
     (if (> confirmations 6)
-      (doall (map #(handle-details % confirmations tx) details)))))
+      (doall (map #(handle-details % tx) details)))))
 
 (defn updatewallets []
   (let [txs (select transactions (limit 1000) (order :created_on :desc))]
