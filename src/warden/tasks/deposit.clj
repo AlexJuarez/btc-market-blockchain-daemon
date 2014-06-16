@@ -15,25 +15,19 @@
 
 (defn handle-details [{account "account" category "category" amount "amount"} txid]
   (if (= category "receive")
-      (let [user-id (util/parse-int account)
-            amount (util/parse-int amount)]
-        (transaction
+      (let [user-id (util/parse-int account)]
           (insert audits (values {:amount amount :tx txid  :role "deposit" :user_id user-id}))
-          (update users (set-fields {:btc (raw (str "btc + " amount))}) (where {:id user-id}))))))
+          (update users (set-fields {:btc (raw (str "btc + " amount))}) (where {:id user-id})))))
 
 (defn process [tx]
   (let [info (btc/gettransaction :txid tx :config config)
         details (info "details")
         confirmations (info "confirmations")]
     (if (> confirmations 6)
-      (doall (map #(handle-details % tx) details)))))
+      (doall
+       (update transactions (set-fields {:processed true}) (where {:id tx}))
+       (map #(handle-details % tx) details)))))
 
 (defn updatewallets []
-  (let [txs (select transactions (limit 1000) (order :created_on :desc))]
+  (let [txs (select transactions (where {:processed false}) (limit 1000) (order :created_on :desc))]
     (doall (map (-> :id process) txs))))
-
-(def tx (:id (second (select transactions))))
-
-(process tx)
-
-((btc/gettransaction :txid tx :config config) "details")

@@ -23,9 +23,8 @@
      com.sun.jmx/jmxri]]
    [environ "0.4.0"]
    [clj-http "0.7.8"];;for reading bitcoins prices from coinbase.com
-   [org.clojure/java.jdbc "0.2.3"];;dependency for korma
+   [org.clojure/java.jdbc "0.3.3"];;dependency for korma
    [postgresql/postgresql "9.1-901.jdbc4"]
-   [korma "0.3.0-beta11"]
-   [lobos "1.0.0-beta1"]
+   [korma "0.3.2"]
    [clj-btc "0.1.1"]]
   :main warden.core)
