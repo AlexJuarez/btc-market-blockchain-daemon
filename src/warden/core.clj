@@ -9,10 +9,10 @@
 
 (def pool (mk-pool))
 
-(defn foo []
-  (every 5000 #(println "I am cool!") pool))
+(defn update-exchange []
+  (every 600000 exchange/update-from-remote pool
+         :fixed-delay true
+         :desc "updates bitcoin prices from coinbase"))
 
-(def config {:rpcpassword "whitecity"
-             :rpcuser "devil"
-             :rpchost "http://127.0.0.1"
-             :rpcport "8332"})
+(defn -main []
+  (update-exchange))
