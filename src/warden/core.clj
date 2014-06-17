@@ -14,5 +14,10 @@
          :fixed-delay true
          :desc "updates bitcoin prices from coinbase"))
 
+(defn check-wallets []
+  (every 600000 deposit/update-wallets pool
+         :fixed-delay true
+         :desc "checks for deposits"))
+
 (defn -main []
   (update-exchange))
