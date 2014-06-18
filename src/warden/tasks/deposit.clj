@@ -28,6 +28,6 @@
        (update transactions (set-fields {:processed true}) (where {:id tx}))
        (map #(handle-details % tx) details)))))
 
-(defn update-wallets []
+(defn start-task []
   (let [txs (select transactions (where {:processed false}) (limit 1000) (order :created_on :desc))]
     (doall (map (-> :id process) txs))))
