@@ -19,7 +19,7 @@
         prep (filter #(not (or (nil? (:from %)) (nil? (:to %)))) (map #(let [s (split (name (key %)) #"_")] {:from (currencies (.substring (first s) 0 3)) :to (currencies (.substring (last s) 0 3)) :value (Float/parseFloat (val %))}) response))]
     (if-not (empty? response)
       (do
-        (println "updateing from remote")
+        (println "updating from remote")
         (delete exchange)
         (insert exchange
                 (values prep))))))

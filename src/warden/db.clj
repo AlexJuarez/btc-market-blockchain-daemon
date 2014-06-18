@@ -31,7 +31,7 @@
   (database web)
   (table :currency))
 
-(defentity withdrawal
+(defentity withdrawals
   (database web)
   (table :withdrawal))
 
