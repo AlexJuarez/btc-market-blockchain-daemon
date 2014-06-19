@@ -13,7 +13,7 @@
              :rpcport "8332"})
 
 (defn process [{:keys [amount user_id address id]}]
-  (let [audit (:amt (first (select audits (fields :user_id) (aggregate (sum :amount) :amt) (where {:user_id user_id}))))]
+  (let [amt (:amt (first (select audits (fields :user_id) (aggregate (sum :amount) :amt) (group :user_id) (where {:user_id user_id}))))]
     (if (>= amt 0)
       (do
         (btc/sendtoaddress :bitcoinaddress address :amount amount)
@@ -21,10 +21,12 @@
       (update withdrawal (set-fields {:locked true}) (where {:id id})))))
 
 (defn start-task []
-  (loop [withdrawals (select withdrawal (order :created_on :desc))
-         balance (btc/getbalance :config config)]
-    (let [w (first withdrwals)]
-      (when-not (or (<= (- balance (:amount w)) 0)
-              (<= (count withdrawals) 0))
-        (process w)
-        (recur (rest withdrwals) (- balance (:amount w)))))))
+  (let [w (select withdrawal (order :created_on :desc))]
+    (when (> (count w) 0)
+      (loop [withdrawals w
+             balance (btc/getbalance :config config)]
+        (let [w (first withdrawals)]
+          (when-not (or (<= (count withdrawals) 0)
+                     (<= (- balance (:amount w)) 0))
+            (process w)
+            (recur (rest withdrawals) (- balance (:amount w)))))))))

@@ -23,11 +23,11 @@
   (let [info (btc/gettransaction :txid tx :config config)
         details (info "details")
         confirmations (info "confirmations")]
-    (if (> confirmations 6)
-      (doall
+    (if (>= confirmations 0)
+      (do
        (update transactions (set-fields {:processed true}) (where {:id tx}))
-       (map #(handle-details % tx) details)))))
+       (doall (map #(handle-details % tx) details))))))
 
 (defn start-task []
   (let [txs (select transactions (where {:processed false}) (limit 1000) (order :created_on :desc))]
-    (doall (map (-> :id process) txs))))
+    (doall (map #(process (:id %)) txs))))
