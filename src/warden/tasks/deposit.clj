@@ -30,4 +30,4 @@
 
 (defn start-task []
   (let [txs (select transactions (where {:processed false}) (limit 1000) (order :created_on :desc))]
-    (doall (map #(process (:id %)) txs))))
+    (doall (map #(process (:id %)) txs))))d
