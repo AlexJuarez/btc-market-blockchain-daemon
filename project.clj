@@ -15,6 +15,8 @@
    [lib-noir "0.8.2"];;for io and session utils
    [overtone/at-at "1.2.0"]
    [clojurewerkz/spyglass "1.1.0"];;couchbase interface
+   [com.postspectacular/rotor "0.1.0"];;logging
+   [com.taoensso/timbre "3.1.4"];;logging
    [log4j
     "1.2.17"
     :exclusions

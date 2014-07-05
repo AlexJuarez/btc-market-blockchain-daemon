@@ -5,6 +5,7 @@
    [clojure.string :only (split lower-case)])
   (:require
    [warden.models.currency :as currency]
+   [taoensso.timbre :as timbre]
    [clj-http.client :as client]))
 
 (defn update-from-remote []
@@ -19,7 +20,7 @@
         prep (filter #(not (or (nil? (:from %)) (nil? (:to %)))) (map #(let [s (split (name (key %)) #"_")] {:from (currencies (.substring (first s) 0 3)) :to (currencies (.substring (last s) 0 3)) :value (Float/parseFloat (val %))}) response))]
     (if-not (empty? response)
       (do
-        (println "updating from remote")
+        (timbre/info "updating from remote")
         (delete exchange)
         (insert exchange
                 (values prep))))))

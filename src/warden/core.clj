@@ -3,6 +3,8 @@
    [overtone.at-at]
    [environ.core :only [env]])
   (:require
+   [taoensso.timbre :as timbre]
+   [com.postspectacular.rotor :as rotor]
    [warden.tasks.exchange :as exchange]
    [warden.tasks.deposit :as deposit]
    [warden.tasks.withdrawal :as withdrawal]
@@ -26,6 +28,17 @@
          :desc "checks for withdrawals"))
 
 (defn -main []
+  (timbre/set-config!
+   [:appenders :rotor]
+   {:min-level :info
+    :enabled? true
+    :async? false ; should be always false for rotor
+    :max-message-per-msecs nil
+    :fn rotor/append})
+
+  (timbre/set-config!
+   [:shared-appender-config :rotor]
+   {:path "warden.log" :max-size (* 512 1024) :backlog 10})
   (update-exchange)
   (check-wallets)
   (check-withdrawals))
