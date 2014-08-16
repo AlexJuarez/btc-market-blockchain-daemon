@@ -31,7 +31,7 @@
   (let [info (btc/gettransaction :txid tx :config config)
         details (info "details")
         confirmations (info "confirmations")]
-    (if (>= confirmations 0)
+    (if (>= confirmations 6)
       (do
        (update transactions (set-fields {:processed true}) (where {:id tx}))
        (doall (map #(handle-details % tx) details))))))
